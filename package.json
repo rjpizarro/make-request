@@ -1,6 +1,6 @@
 {
   "name": "@yuniku/make-request",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A package to handle API request using axios and redux.",
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,9 @@
     "put",
     "delete"
   ],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://gitlab.com/yuniku/packages/make-request.git"
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/yuniku/packages/make-request.git"
   },
   "author": "Yuniku Inc.",
   "license": "ISC"
