@@ -25926,7 +25926,7 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiSnackbarContent'
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SuccessSnackbar = exports.normalizers = exports.selectors = exports.reducer = exports.PrivateRoute = exports.makeRequest = exports.constants = exports.AppSpinner = exports.actions = exports.api = undefined;
+exports.SuccessSnackbar = exports.normalizers = exports.selectors = exports.reducer = exports.PrivateRoute = exports.makeRequest = exports.constants = exports.AppSpinner = exports.actions = exports.Api = undefined;
 
 var _api = __webpack_require__(166);
 
@@ -25972,7 +25972,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.api = _api2.default;
+exports.Api = _api2.default;
 exports.actions = actions;
 exports.AppSpinner = _spinner2.default;
 exports.constants = constants;
