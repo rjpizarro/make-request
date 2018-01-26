@@ -1,4 +1,4 @@
-import api from './api';
+import Api from './api';
 import * as constants from './constants';
 import * as selectors from './selectors';
 import * as actions from './actions';
@@ -10,7 +10,7 @@ import normalizers from './normalizers/index';
 import SuccessSnackbar from './successSnackbar';
 
 export {
-    api,
+    Api,
     actions,
     AppSpinner,
     constants,

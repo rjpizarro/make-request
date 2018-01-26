@@ -48,8 +48,9 @@ export default class Api {
      * @returns {Function}
      */
     get = (endpoint) => {
-        return function () {
+        return () => {
             return new Promise((resolve, reject) => {
+
                 this.apiInstance.get(endpoint)
                     .then((response) => {
                         resolve(response);
@@ -80,7 +81,7 @@ export default class Api {
             id: '',
             params: []
         }) => {
-        return function (data) {
+        return (data) => {
             return new Promise((resolve, reject) => {
                 const {id, params} = data;
                 const completeEndpoint = (params && params.length) ?
@@ -121,7 +122,7 @@ export default class Api {
             body: {},
             params: []
         }) => {
-        return function (data) {
+        return (data) => {
             return new Promise((resolve, reject) => {
                 const {body, params} = data;
                 const request = (options.beforeSend) ? options.beforeSend(body) : body;
@@ -165,7 +166,7 @@ export default class Api {
             body: {},
             params: []
         }) => {
-        return function (data) {
+        return (data) => {
             return new Promise((resolve, reject) => {
                 const {id, body, params} = data;
                 const request = (options.beforeSend) ? options.beforeSend(body) : body;
@@ -205,7 +206,7 @@ export default class Api {
             id: '',
             params: []
         }) => {
-        return function (data) {
+        return (data) => {
             return new Promise((resolve, reject) => {
                 const {id, params} = data;
                 const completeEndpoint = (params && params.length) ?

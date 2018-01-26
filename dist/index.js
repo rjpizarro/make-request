@@ -26020,10 +26020,9 @@ var Api = function Api(baseUrl, _ref) {
 
     this.get = function (endpoint) {
         return function () {
-            var _this2 = this;
-
             return new Promise(function (resolve, reject) {
-                _this2.apiInstance.get(endpoint).then(function (response) {
+
+                _this.apiInstance.get(endpoint).then(function (response) {
                     resolve(response);
                 }).catch(function (err) {
                     reject(err);
@@ -26042,15 +26041,13 @@ var Api = function Api(baseUrl, _ref) {
         };
 
         return function (data) {
-            var _this3 = this;
-
             return new Promise(function (resolve, reject) {
                 var id = data.id,
                     params = data.params;
 
-                var completeEndpoint = params && params.length ? _this3._getEndpointWithRouteParams(endpoint, params) : _this3._getEndpointWithRouteId(endpoint, id);
+                var completeEndpoint = params && params.length ? _this._getEndpointWithRouteParams(endpoint, params) : _this._getEndpointWithRouteId(endpoint, id);
 
-                _this3.apiInstance.get(completeEndpoint).then(function (response) {
+                _this.apiInstance.get(completeEndpoint).then(function (response) {
                     if (options.onResponse) options.onResponse(response, data);
 
                     resolve(response);
@@ -26074,16 +26071,14 @@ var Api = function Api(baseUrl, _ref) {
         };
 
         return function (data) {
-            var _this4 = this;
-
             return new Promise(function (resolve, reject) {
                 var body = data.body,
                     params = data.params;
 
                 var request = options.beforeSend ? options.beforeSend(body) : body;
-                var completeEndpoint = params && params.length ? _this4._getEndpointWithRouteParams(endpoint, params) : endpoint;
+                var completeEndpoint = params && params.length ? _this._getEndpointWithRouteParams(endpoint, params) : endpoint;
 
-                _this4.apiInstance.post(completeEndpoint, request).then(function (response) {
+                _this.apiInstance.post(completeEndpoint, request).then(function (response) {
                     if (options.onResponse) options.onResponse(response, data);
 
                     resolve(response);
@@ -26108,17 +26103,15 @@ var Api = function Api(baseUrl, _ref) {
         };
 
         return function (data) {
-            var _this5 = this;
-
             return new Promise(function (resolve, reject) {
                 var id = data.id,
                     body = data.body,
                     params = data.params;
 
                 var request = options.beforeSend ? options.beforeSend(body) : body;
-                var completeEndpoint = params && params.length ? _this5._getEndpointWithRouteParams(endpoint, params) : _this5._getEndpointWithRouteId(endpoint, id);
+                var completeEndpoint = params && params.length ? _this._getEndpointWithRouteParams(endpoint, params) : _this._getEndpointWithRouteId(endpoint, id);
 
-                _this5.apiInstance.put(completeEndpoint, request).then(function (response) {
+                _this.apiInstance.put(completeEndpoint, request).then(function (response) {
                     if (options.onResponse) options.onResponse(response, data);
 
                     resolve(response);
@@ -26139,15 +26132,13 @@ var Api = function Api(baseUrl, _ref) {
         };
 
         return function (data) {
-            var _this6 = this;
-
             return new Promise(function (resolve, reject) {
                 var id = data.id,
                     params = data.params;
 
-                var completeEndpoint = params && params.length ? _this6._getEndpointWithRouteParams(endpoint, params) : _this6._getEndpointWithRouteId(endpoint, id);
+                var completeEndpoint = params && params.length ? _this._getEndpointWithRouteParams(endpoint, params) : _this._getEndpointWithRouteId(endpoint, id);
 
-                _this6.apiInstance.delete(completeEndpoint).then(function (response) {
+                _this.apiInstance.delete(completeEndpoint).then(function (response) {
                     if (options.onResponse) options.onResponse(response, data);
 
                     resolve(response);
