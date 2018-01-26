@@ -233,7 +233,7 @@ export default class Api {
      * @return {string}
      * @private
      */
-    private _getEndpointWithRouteId = (endpoint, id) => `${endpoint}/${id}`;
+    _getEndpointWithRouteId = (endpoint, id) => `${endpoint}/${id}`;
 
     /**
      *
@@ -242,6 +242,6 @@ export default class Api {
      * @return {string}
      * @private
      */
-    private _getEndpointWithRouteParams = (endpoint, params = []) => `${endpoint}/${params.join('/')}`;
+    _getEndpointWithRouteParams = (endpoint, params = []) => `${endpoint}/${params.join('/')}`;
 
 }

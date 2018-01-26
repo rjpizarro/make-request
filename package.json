@@ -2,11 +2,11 @@
   "name": "@yuniku/make-request",
   "version": "1.0.5",
   "description": "A package to handle API request using axios and redux.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack --display-error-details"
   },
   "keywords": [
     "api",
@@ -29,19 +29,25 @@
     "material-ui": "^1.0.0-beta.21",
     "normalizr": "^3.2.4",
     "react": "^16.1.1",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
     "react-spinkit": "^3.0.0",
     "redux": "^3.7.2",
     "reselect": "^3.0.1",
     "webpack": "^3.10.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.5.1"
+    "babel-preset-env": "^1.5.1",
+    "css-loader": "^0.28.9",
+    "postcss-loader": "^2.0.10",
+    "style-loader": "^0.19.1"
   },
   "author": "Yuniku Inc.",
   "license": "ISC"
