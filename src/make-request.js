@@ -30,7 +30,7 @@ export default function makeRequest(
         endRequestActionType: undefined,
     }
 ) {
-        dispatch(startRequest(options.endRequestActionType));
+        dispatch(startRequest(options.startRequestActionType));
         const normalizer = options.normalizer || (options.useMongoNormalizer) ? normalizers.mongoArrayNormalize : normalizers.arrayNormalize;
 
         return new Promise((resolve, reject) => {

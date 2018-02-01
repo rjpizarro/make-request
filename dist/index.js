@@ -33112,7 +33112,7 @@ function makeRequest(promiseCall) {
         endRequestActionType: undefined
     };
 
-    dispatch((0, _actions.startRequest)(options.endRequestActionType));
+    dispatch((0, _actions.startRequest)(options.startRequestActionType));
     var normalizer = options.normalizer || options.useMongoNormalizer ? _normalizers2.default.mongoArrayNormalize : _normalizers2.default.arrayNormalize;
 
     return new Promise(function (resolve, reject) {
