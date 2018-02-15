@@ -26175,13 +26175,16 @@ var Api = function Api(baseUrl, _ref) {
             errorData = {
                 title: 'Oops! Something went wrong.',
                 body: code === 400 || code === 404 || code === 401 ? 'Username and password don\'t match' : '',
-                code: code
+                code: code,
+                errorResponse: error.response,
+                raw: error
             };
         } else if (error.request) {
             errorData = {
                 title: 'Connection Error',
                 body: 'The application cannot connect to the server.',
-                code: 500
+                code: 500,
+                raw: error
             };
         }
 
