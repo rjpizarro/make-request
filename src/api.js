@@ -234,7 +234,7 @@ export default class Api {
      * @return {string}
      * @private
      */
-    _getEndpointWithRouteId = (endpoint, id) => `${endpoint}/${id}`;
+    _getEndpointWithRouteId = (endpoint, id) => (id) ? `${endpoint}/${id}` : endpoint;
 
     /**
      *
