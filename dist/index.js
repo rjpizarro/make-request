@@ -26150,7 +26150,7 @@ var Api = function Api(baseUrl, _ref) {
     };
 
     this._getEndpointWithRouteId = function (endpoint, id) {
-        return endpoint + '/' + id;
+        return id ? endpoint + '/' + id : endpoint;
     };
 
     this._getEndpointWithRouteParams = function (endpoint) {
