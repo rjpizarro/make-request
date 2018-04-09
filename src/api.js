@@ -106,6 +106,68 @@ export default class Api {
 
     /**
      *
+     * @param endpoint
+     * @param downloadFileName
+     * @param {object} options
+     * @param {*} options.beforeSend
+     * @param {*} options.onResponse
+     * @param {String} options.fileType
+     * @param {object} data
+     * @param {string} data.id
+     * @param {Array} data.params
+     * @return {Function}
+     */
+    getFile = (
+        endpoint,
+        downloadFileName,
+        options = {
+            beforeSend: d => d,
+            onResponse: () => {},
+            fileType: 'pdf'
+        },
+        data = {
+            id: '',
+            params: []
+        }) => {
+        return (data) => {
+            const mimeByFileType = {
+                pdf: 'application/pdf',
+                xls: 'application/vnd.ms-excel',
+            };
+
+            return new Promise((resolve, reject) => {
+                const {id, params} = data;
+                const completeEndpoint = (params && params.length) ?
+                    this._getEndpointWithRouteParams(endpoint, params) :
+                    this._getEndpointWithRouteId(endpoint, id);
+
+                this.apiInstance.get(completeEndpoint, {responseType: 'arraybuffer'})
+                    .then((response) => {
+                        if (options.onResponse) options.onResponse(response, data);
+
+                        resolve(response);
+
+                        let blob = new Blob([response], {type: mimeByFileType[options.fileType]});
+                        let link = document.createElement('a');
+                        let url = window.URL.createObjectURL(blob);
+                        document.body.appendChild(link);
+                        link.href = url;
+                        link.download = downloadFileName;
+                        link.click();
+
+                        setTimeout(() => {
+                            window.URL.revokeObjectURL(url);
+                        }, 0);
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            })
+        }
+    };
+
+    /**
+     *
      * @param {string} endpoint
      * @param {object} data
      * @param {object} data.body
@@ -144,7 +206,6 @@ export default class Api {
             })
         }
     };
-
 
     /**
      *

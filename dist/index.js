@@ -26372,6 +26372,54 @@ var Api = function Api(baseUrl, _ref) {
         };
     };
 
+    this.getFile = function (endpoint, downloadFileName) {
+        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+            beforeSend: function beforeSend(d) {
+                return d;
+            },
+            onResponse: function onResponse() {},
+            fileType: 'pdf'
+        };
+        var data = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {
+            id: '',
+            params: []
+        };
+
+        return function (data) {
+            var mimeByFileType = {
+                pdf: 'application/pdf',
+                xls: 'application/vnd.ms-excel'
+            };
+
+            return new Promise(function (resolve, reject) {
+                var id = data.id,
+                    params = data.params;
+
+                var completeEndpoint = params && params.length ? _this._getEndpointWithRouteParams(endpoint, params) : _this._getEndpointWithRouteId(endpoint, id);
+
+                _this.apiInstance.get(completeEndpoint, { responseType: 'arraybuffer' }).then(function (response) {
+                    if (options.onResponse) options.onResponse(response, data);
+
+                    resolve(response);
+
+                    var blob = new Blob([response], { type: mimeByFileType[options.fileType] });
+                    var link = document.createElement('a');
+                    var url = window.URL.createObjectURL(blob);
+                    document.body.appendChild(link);
+                    link.href = url;
+                    link.download = downloadFileName;
+                    link.click();
+
+                    setTimeout(function () {
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+    };
+
     this.post = function (endpoint) {
         var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
             beforeSend: function beforeSend(d) {
@@ -26524,6 +26572,21 @@ var Api = function Api(baseUrl, _ref) {
  * @param endpoint
  * @param {object} options
  * @param {*} options.onResponse
+ * @param {object} data
+ * @param {string} data.id
+ * @param {Array} data.params
+ * @return {Function}
+ */
+
+
+/**
+ *
+ * @param endpoint
+ * @param downloadFileName
+ * @param {object} options
+ * @param {*} options.beforeSend
+ * @param {*} options.onResponse
+ * @param {String} options.fileType
  * @param {object} data
  * @param {string} data.id
  * @param {Array} data.params
