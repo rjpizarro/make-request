@@ -12,6 +12,7 @@ const initialState = {
     serviceError: {},
     showSuccessMessage: false,
     successMessage: '',
+    promiseQueueCount: 0,
 };
 
 export default (state = initialState, action) => {
@@ -37,7 +38,10 @@ export default (state = initialState, action) => {
         return Object.assign(
             {},
             state,
-            {isLoading: true}
+            {
+                isLoading: true,
+                promiseQueueCount: state.promiseQueueCount + 1,
+            }
         );
     }
 
@@ -45,7 +49,10 @@ export default (state = initialState, action) => {
         return Object.assign(
             {},
             state,
-            {isLoading: false}
+            {
+                isLoading: false,
+                promiseQueueCount: state.promiseQueueCount - 1,
+            }
         );
     }
 
