@@ -112,9 +112,11 @@ export default class Api {
      * @param {*} options.beforeSend
      * @param {*} options.onResponse
      * @param {String} options.fileType
+     * @param {String} options.method
      * @param {object} data
      * @param {string} data.id
      * @param {Array} data.params
+     * @param {object} data.body
      * @return {Function}
      */
     getFile = (
@@ -123,45 +125,31 @@ export default class Api {
         options = {
             beforeSend: d => d,
             onResponse: () => {},
-            fileType: 'pdf'
+            fileType: 'pdf',
+            method: 'GET',
         },
         data = {
             id: '',
-            params: []
+            body: {},
+            params: [],
         }) => {
         return (data) => {
-            const mimeByFileType = {
-                pdf: 'application/pdf',
-                xls: 'application/vnd.ms-excel',
-            };
-
             return new Promise((resolve, reject) => {
-                const {id, params} = data;
+                const {id, params, body} = data;
                 const completeEndpoint = (params && params.length) ?
                     this._getEndpointWithRouteParams(endpoint, params) :
                     this._getEndpointWithRouteId(endpoint, id);
 
-                this.apiInstance.get(completeEndpoint, {responseType: 'arraybuffer'})
-                    .then((response) => {
-                        if (options.onResponse) options.onResponse(response, data);
-
-                        resolve(response);
-
-                        let blob = new Blob([response], {type: mimeByFileType[options.fileType]});
-                        let link = document.createElement('a');
-                        let url = window.URL.createObjectURL(blob);
-                        document.body.appendChild(link);
-                        link.href = url;
-                        link.download = downloadFileName;
-                        link.click();
-
-                        setTimeout(() => {
-                            window.URL.revokeObjectURL(url);
-                        }, 0);
-                    })
-                    .catch((err) => {
-                        reject(err)
-                    })
+                if (options.method === 'GET') {
+                    this.apiInstance.get(completeEndpoint, {responseType: 'arraybuffer'})
+                        .then((response) => this._onGetFileResponse(response, data, downloadFileName, resolve, options))
+                        .catch(reject)
+                } else {
+                    const request = (options.beforeSend) ? options.beforeSend(body) : body;
+                    this.apiInstance.post(completeEndpoint, request, {responseType: 'arraybuffer'})
+                        .then((response) => this._onGetFileResponse(response, data, downloadFileName, resolve, options))
+                        .catch(reject)
+                }
             })
         }
     };
@@ -290,6 +278,37 @@ export default class Api {
         }
     };
 
+    /**
+     *
+     * @param response
+     * @param data
+     * @param downloadFileName
+     * @param resolve
+     * @param options
+     * @private
+     */
+     _onGetFileResponse = (response, data, downloadFileName, resolve, options) => {
+        const mimeByFileType = {
+            pdf: 'application/pdf',
+            xls: 'application/vnd.ms-excel',
+        };
+
+        if (options.onResponse) options.onResponse(response, data);
+
+        resolve(response);
+
+        let blob = new Blob([response], {type: mimeByFileType[options.fileType]});
+        let link = document.createElement('a');
+        let url = window.URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.href = url;
+        link.download = downloadFileName;
+        link.click();
+
+        setTimeout(() => {
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    };
 
     /**
      *
