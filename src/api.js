@@ -15,10 +15,11 @@ export default class Api {
 
                 if (error.response) {
                     const code = error.response.status;
+                    const message = error.response.data.message;
 
                     errorData = {
                         title: 'Oops! Something went wrong.',
-                        body: (code === 400 || code === 404 || code === 401) ? 'Username and password don\'t match' : '',
+                        body: (message) ? message : '',
                         code: code,
                         errorResponse: error.response,
                         raw: error,
