@@ -142,7 +142,6 @@ export default class Api {
                     this._getEndpointWithRouteParams(endpoint, params) :
                     this._getEndpointWithRouteId(endpoint, id);
 
-                console.log(">>", options.method)
                 if (options.method === 'GET') {
                     this.apiInstance.get(completeEndpoint, {responseType: 'arraybuffer'})
                         .then((response) => this._onGetFileResponse(response, data, downloadFileName, resolve, options))
