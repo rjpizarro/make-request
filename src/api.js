@@ -1,4 +1,5 @@
 import axios from 'axios';
+import mimeTypes from './mime-types';
 
 export default class Api {
     constructor(baseUrl, {timeout = 30000, headers = {}}) {
@@ -141,6 +142,7 @@ export default class Api {
                     this._getEndpointWithRouteParams(endpoint, params) :
                     this._getEndpointWithRouteId(endpoint, id);
 
+                console.log(">>", options.method)
                 if (options.method === 'GET') {
                     this.apiInstance.get(completeEndpoint, {responseType: 'arraybuffer'})
                         .then((response) => this._onGetFileResponse(response, data, downloadFileName, resolve, options))
@@ -289,16 +291,11 @@ export default class Api {
      * @private
      */
      _onGetFileResponse = (response, data, downloadFileName, resolve, options) => {
-        const mimeByFileType = {
-            pdf: 'application/pdf',
-            xls: 'application/vnd.ms-excel',
-        };
-
         if (options.onResponse) options.onResponse(response, data);
 
         resolve(response);
 
-        let blob = new Blob([response], {type: mimeByFileType[options.fileType]});
+        let blob = new Blob([response], {type: mimeTypes[options.fileType]});
         let link = document.createElement('a');
         let url = window.URL.createObjectURL(blob);
         document.body.appendChild(link);
