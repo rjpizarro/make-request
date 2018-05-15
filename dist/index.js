@@ -26085,7 +26085,6 @@ var Api = function Api(baseUrl, _ref) {
 
                 var completeEndpoint = params && params.length ? _this._getEndpointWithRouteParams(endpoint, params) : _this._getEndpointWithRouteId(endpoint, id);
 
-                console.log(">>", options.method);
                 if (options.method === 'GET') {
                     _this.apiInstance.get(completeEndpoint, { responseType: 'arraybuffer' }).then(function (response) {
                         return _this._onGetFileResponse(response, data, downloadFileName, resolve, options);
