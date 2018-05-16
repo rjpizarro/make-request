@@ -1,5 +1,17 @@
 import axios from 'axios';
 import mimeTypes from './mime-types';
+import _isArrayBuffer from 'lodash/isArrayBuffer';
+import ab2str from 'arraybuffer-to-string';
+
+const _getMessageFromArrayBufferError = (data) => {
+    try {
+        const jsonResponse = JSON.parse(ab2str(data));
+
+        return jsonResponse.message;
+    } catch (err) {
+        return err
+    }
+};
 
 export default class Api {
     constructor(baseUrl, {timeout = 30000, headers = {}}) {
@@ -16,7 +28,9 @@ export default class Api {
 
                 if (error.response) {
                     const code = error.response.status;
-                    const message = error.response.data.message;
+                    const data = error.response.data;
+                    //Error from download files is converted to an ArrayBuffer. Transform to string for response
+                    const message = _isArrayBuffer(data) ? _getMessageFromArrayBufferError(data) : data.message;
 
                     errorData = {
                         title: 'Oops! Something went wrong.',
