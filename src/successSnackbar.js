@@ -4,14 +4,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {shouldShowSuccessMessage, getSuccessMessage} from './selectors';
 import {hideSuccessMessage} from './actions';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 
 let SuccessSnackBar = (props) => {
     return <Snackbar
         open={props.successApiCall}
         message={props.successMessage}
         autoHideDuration={4000}
-        onRequestClose={props.hideSuccessMessage}
+        onClose={props.hideSuccessMessage}
         contentStyle={{color: '#FFF'}}
     />;
 };

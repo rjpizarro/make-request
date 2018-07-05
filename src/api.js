@@ -14,43 +14,54 @@ const _getMessageFromArrayBufferError = (data) => {
 };
 
 export default class Api {
-    constructor(baseUrl, {timeout = 30000, headers = {}}) {
+    constructor(baseUrl, {timeout = 30000, headers = {}, lang = 'en', errorInterceptor}) {
         this.apiInstance = axios.create({
             baseURL: baseUrl,
             timeout: timeout,
             headers: {...headers}
         });
 
-        this.apiInstance.interceptors.response.use(
-            (response) => response.data,
-            (error) => {
-                let errorData;
+        if (errorInterceptor && typeof errorInterceptor === 'function') {
+            this.apiInstance.interceptors.response.use(
+                (response) => response.data,
+                errorInterceptor
+            )
+        } else {
+            this.apiInstance.interceptors.response.use(
+                (response) => response.data,
+                (error) => {
+                    let errorData;
+                    const language = (lang) ? lang : 'en';
 
-                if (error.response) {
-                    const code = error.response.status;
-                    const data = error.response.data;
-                    //Error from download files is converted to an ArrayBuffer. Transform to string for response
-                    const message = _isArrayBuffer(data) ? _getMessageFromArrayBufferError(data) : data.message;
+                    if (error.response) {
+                        const data = error.response.data;
+                        const status = data.status;
+                        const code = data.code || error.response.status || 400;
+                        //Error from download files is converted to an ArrayBuffer. Transform to string for response
+                        const title = _isArrayBuffer(data) ? _getMessageFromArrayBufferError(data) : data.message;
+                        const message = data.response || data.message;
 
-                    errorData = {
-                        title: 'Oops! Something went wrong.',
-                        body: (message) ? message : '',
-                        code: code,
-                        errorResponse: error.response,
-                        raw: error,
-                    };
-                } else if (error.request) {
-                    errorData = {
-                        title: 'Connection Error',
-                        body: 'The application cannot connect to the server.',
-                        code: 500,
-                        raw: error,
+
+                        errorData = {
+                            title: (title) ? title : (language === 'en') ? 'Oops! Something went wrong.' : 'Error en la aplicación.',
+                            body: (message) ? message : '',
+                            code: `${status}-${code}`,
+                            errorResponse: error.response,
+                            raw: error,
+                        };
+                    } else if (error.request) {
+                        errorData = {
+                            title: (language === 'en') ? 'Connection Error' : 'Error de conexión',
+                            body: (language === 'en') ? 'The application cannot connect to the server.' : 'La aplicación no puede conectarse con el servidor.',
+                            code: 500,
+                            raw: error,
+                        }
                     }
-                }
 
-                return Promise.reject(errorData);
-            }
-        );
+                    return Promise.reject(errorData);
+                }
+            );
+        }
     }
 
     /**
