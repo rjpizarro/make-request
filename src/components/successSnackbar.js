@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes  from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {shouldShowSuccessMessage, getSuccessMessage} from './selectors';
-import {hideSuccessMessage} from './actions';
+import {shouldShowSuccessMessage, getSuccessMessage} from '../selectors';
+import {hideSuccessMessage} from '../actions';
 import Snackbar from '@material-ui/core/Snackbar';
 
 let SuccessSnackBar = (props) => {

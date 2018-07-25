@@ -1,11 +1,11 @@
 import {normalize, schema} from 'normalizr';
-import _ from 'lodash';
+import _omit from 'lodash/omit';
 
 const entity = new schema.Entity('data', {}, {
     idAttribute: '_id',
     processStrategy: (entity) => ({
         id: entity._id,
-        ..._.omit(entity, '_id')
+        ..._omit(entity, '_id')
     })
 });
 

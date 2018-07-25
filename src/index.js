@@ -3,11 +3,11 @@ import * as constants from './constants';
 import * as selectors from './selectors';
 import * as actions from './actions';
 import reducer from './reducer';
-import PrivateRoute from './privateRoute';
-import AppSpinner from './spinner';
+import PrivateRoute from './components/privateRoute';
+import AppSpinner from './components/spinner';
 import makeRequest from './make-request';
 import normalizers from './normalizers/index';
-import SuccessSnackbar from './successSnackbar';
+import SuccessSnackbar from './components/successSnackbar';
 
 export {
     Api,

@@ -183,6 +183,34 @@ export default class Api {
 
     /**
      *
+     * @param url
+     * @param fileName
+     * @param {object} options
+     * @param {String} options.fileType
+     * @return {Function}
+     */
+    downloadFile = (url, fileName, options = {}) => {
+        return () => {
+
+            return new Promise((resolve, reject) => {
+                try {
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = (event) => {
+                        const blob = xhr.response;
+                        this._onGetFileResponse(xhr.response, {}, fileName, resolve, options)
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                } catch(err) {
+                    reject(err)
+                }
+            })
+        }
+    };
+
+    /**
+     *
      * @param {string} endpoint
      * @param {object} data
      * @param {object} data.body

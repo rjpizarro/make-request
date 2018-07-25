@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes  from 'prop-types';
 import {connect} from 'react-redux';
-import {serviceIsLoading} from './selectors';
+import {serviceIsLoading} from '../selectors';
 import Spinner from 'react-spinkit';
 
 const styles = {
