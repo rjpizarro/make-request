@@ -1,6 +1,7 @@
 import axios from 'axios';
 import mimeTypes from './mime-types';
 import _isArrayBuffer from 'lodash/isArrayBuffer';
+import _isEmpty from 'lodash/isEmpty';
 import ab2str from 'arraybuffer-to-string';
 
 const _getMessageFromArrayBufferError = (data) => {
@@ -100,6 +101,7 @@ export default class Api {
      * @param {object} data
      * @param {string} data.id
      * @param {Array} data.params
+     * @param {Object} data.query
      * @return {Function}
      */
     getWithRouteParams = (
@@ -109,14 +111,23 @@ export default class Api {
         },
         data = {
             id: '',
-            params: []
+            params: [],
+            query: {}
         }) => {
         return (data) => {
             return new Promise((resolve, reject) => {
-                const {id, params} = data;
-                const completeEndpoint = (params && params.length) ?
-                    this._getEndpointWithRouteParams(endpoint, params) :
-                    this._getEndpointWithRouteId(endpoint, id);
+                const {id, params, query} = data;
+                let completeEndpoint;
+
+                if (params && params.length) {
+                    completeEndpoint = this._getEndpointWithRouteParams(endpoint, params)
+                } else {
+                    completeEndpoint = this._getEndpointWithRouteId(endpoint, id);
+                }
+
+                if (!_isEmpty(query)) {
+                    completeEndpoint = this._getEndpointWithQueryParams(completeEndpoint, query)
+                }
 
                 this.apiInstance.get(completeEndpoint)
                     .then((response) => {
@@ -378,4 +389,13 @@ export default class Api {
      */
     _getEndpointWithRouteParams = (endpoint, params = []) => `${endpoint}/${params.join('/')}`;
 
+    /**
+     *
+     * @param {string} endpoint
+     * @param {Object} query
+     * @return {string}
+     * @private
+     */
+    _getEndpointWithQueryParams = (endpoint, query = {}) =>
+        `${endpoint}?${Object.keys(query).map(k => `${k}=${query[k]}`).join('&')}`;
 }
