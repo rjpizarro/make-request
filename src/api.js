@@ -211,6 +211,12 @@ export default class Api {
                         const blob = xhr.response;
                         this._onGetFileResponse(xhr.response, {}, fileName, resolve, options)
                     };
+                    xhr.onabort = () => {
+                        reject("Transaction aborted!")
+                    };
+                    xhr.onerror = (err) => {
+                        reject(err)
+                    };
                     xhr.open('GET', url);
                     xhr.send();
                 } catch(err) {
