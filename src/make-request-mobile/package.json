@@ -1,0 +1,23 @@
+{
+  "name": "@yuniku/react-native-make-request",
+  "version": "1.0.0",
+  "description": "A package to handle API request using axios and redux for React Native.",
+  "main": "dist/index.js",
+  "keywords": [
+    "api",
+    "request",
+    "yuniku",
+    "redux",
+    "axios",
+    "post",
+    "get",
+    "put",
+    "delete"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/yuniku/packages/make-request.git"
+  },
+  "author": "Yuniku Inc.",
+  "license": "ISC"
+}
