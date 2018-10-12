@@ -12,7 +12,8 @@
     "post",
     "get",
     "put",
-    "delete"
+    "delete",
+    "react-native"
   ],
   "repository": {
     "type": "git",

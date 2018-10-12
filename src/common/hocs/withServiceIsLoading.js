@@ -20,6 +20,10 @@ const mapStateToProps = (state, props) => {
     }
 };
 
+/**
+ *
+ * @param {string} [getLoadingProp]
+ */
 export default (getLoadingProp = 'serviceIsLoading') =>
     compose(
         withProps( props => ({

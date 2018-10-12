@@ -1,4 +1,4 @@
-import normalizers from './normalizers/index';
+import normalizers from './normalizers';
 import {startRequest, endRequest, addError, removeError} from './actions';
 
 /**
@@ -29,7 +29,7 @@ export default function makeRequest(
 ) {
         let normalizer;
 
-        if (options.beforeNormalize === undefined) {options.beforeNormalize = () => {}}
+        if (options.beforeNormalize === undefined) {options.beforeNormalize = null}
         if (options.normalizer === undefined) {options.normalizer = null}
         if (options.useMongoNormalizer === undefined) {options.useMongoNormalizer = false}
         if (options.shouldNormalize === undefined) {options.shouldNormalize = false}

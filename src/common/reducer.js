@@ -41,15 +41,16 @@ export default (state = initialState, action) => {
             silent,
             customRequestType,
         } = action;
-        const {promiseQueueCount} = state;
-        const nextCount = (silent) ? promiseQueueCount : promiseQueueCount + 1;
-
-        state = dotProp.set(state, 'promiseQueueCount', nextCount);
 
         if (customRequestType) {
-            const customLoadingCount = _get(state, `loading.${customRequestType}`, 0);
+            const customLoadingCount = _get(state, `isLoading.${customRequestType}`, 0);
 
-            state = dotProp.set(state, `loading.${customRequestType}`, customLoadingCount + 1);
+            state = dotProp.set(state, `isLoading.${customRequestType}`, customLoadingCount + 1);
+        } else {
+            const {promiseQueueCount} = state;
+            const nextCount = (silent) ? promiseQueueCount : promiseQueueCount + 1;
+
+            state = dotProp.set(state, 'promiseQueueCount', nextCount);
         }
     }
 
@@ -58,15 +59,16 @@ export default (state = initialState, action) => {
             silent,
             customRequestType,
         } = action;
-        const {promiseQueueCount} = state;
-        const nextCount = (silent) ? promiseQueueCount : promiseQueueCount - 1;
-
-        state = dotProp.set(state, 'promiseQueueCount', nextCount);
 
         if (customRequestType) {
-            const customLoadingCount = _get(state, `loading.${customRequestType}`);
+            const customLoadingCount = _get(state, `isLoading.${customRequestType}`);
 
-            state = dotProp.set(state, `loading.${customRequestType}`, customLoadingCount - 1);
+            state = dotProp.set(state, `isLoading.${customRequestType}`, customLoadingCount - 1);
+        } else {
+            const {promiseQueueCount} = state;
+            const nextCount = (silent) ? promiseQueueCount : promiseQueueCount - 1;
+
+            state = dotProp.set(state, 'promiseQueueCount', nextCount)
         }
     }
 

@@ -120,13 +120,13 @@ export default class Api {
                 let completeEndpoint;
 
                 if (params && params.length) {
-                    completeEndpoint = this._getEndpointWithRouteParams(endpoint, params)
+                    completeEndpoint = Api.getEndpointWithRouteParams(endpoint, params)
                 } else {
-                    completeEndpoint = this._getEndpointWithRouteId(endpoint, id);
+                    completeEndpoint = Api.getEndpointWithRouteId(endpoint, id);
                 }
 
                 if (!_isEmpty(query)) {
-                    completeEndpoint = this._getEndpointWithQueryParams(completeEndpoint, query)
+                    completeEndpoint = Api.getEndpointWithQueryParams(completeEndpoint, query)
                 }
 
                 this.apiInstance.get(completeEndpoint)
@@ -168,7 +168,7 @@ export default class Api {
                 const {body, params} = data;
                 const request = (options.beforeSend) ? options.beforeSend(body) : body;
                 const completeEndpoint = (params && params.length) ?
-                    this._getEndpointWithRouteParams(endpoint, params) : endpoint;
+                    Api.getEndpointWithRouteParams(endpoint, params) : endpoint;
 
                 this.apiInstance.post(completeEndpoint, request)
                     .then((response) => {
@@ -211,8 +211,8 @@ export default class Api {
                 const {id, body, params} = data;
                 const request = (options.beforeSend) ? options.beforeSend(body) : body;
                 const completeEndpoint = (params && params.length) ?
-                    this._getEndpointWithRouteParams(endpoint, params) :
-                    this._getEndpointWithRouteId(endpoint, id);
+                    Api.getEndpointWithRouteParams(endpoint, params) :
+                    Api.getEndpointWithRouteId(endpoint, id);
 
                 this.apiInstance.put(completeEndpoint, request)
                     .then((response) => {
@@ -250,8 +250,8 @@ export default class Api {
             return new Promise((resolve, reject) => {
                 const {id, params} = data;
                 const completeEndpoint = (params && params.length) ?
-                    this._getEndpointWithRouteParams(endpoint, params) :
-                    this._getEndpointWithRouteId(endpoint, id);
+                    Api.getEndpointWithRouteParams(endpoint, params) :
+                    Api.getEndpointWithRouteId(endpoint, id);
 
                 this.apiInstance.delete(completeEndpoint)
                     .then((response) => {
@@ -271,26 +271,24 @@ export default class Api {
      * @param endpoint
      * @param id
      * @return {string}
-     * @private
      */
-    _getEndpointWithRouteId = (endpoint, id) => (id) ? `${endpoint}/${id}` : endpoint;
+    static getEndpointWithRouteId = (endpoint, id) => (id) ? `${endpoint}/${id}` : endpoint;
 
     /**
      *
      * @param {string} endpoint
      * @param {Array} params
      * @return {string}
-     * @private
      */
-    _getEndpointWithRouteParams = (endpoint, params = []) => `${endpoint}/${params.join('/')}`;
+    static getEndpointWithRouteParams = (endpoint, params = []) => `${endpoint}/${params.join('/')}`;
+
 
     /**
      *
      * @param {string} endpoint
      * @param {Object} query
      * @return {string}
-     * @private
      */
-    _getEndpointWithQueryParams = (endpoint, query = {}) =>
+    static getEndpointWithQueryParams = (endpoint, query = {}) =>
         `${endpoint}?${Object.keys(query).map(k => `${k}=${query[k]}`).join('&')}`;
 }

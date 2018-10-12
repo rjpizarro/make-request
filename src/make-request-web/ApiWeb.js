@@ -1,4 +1,5 @@
 import Api from '../common/Api';
+import mimeTypes from '../common/mime-types';
 
 export default class ApiWeb extends Api {
     constructor(baseUrl, {timeout = 30000, headers = {}, lang = 'en', errorInterceptor}) {
@@ -7,7 +8,7 @@ export default class ApiWeb extends Api {
             headers: headers,
             lang: lang,
             errorInterceptor: errorInterceptor
-        })
+        });
     }
 
     /**
@@ -43,8 +44,8 @@ export default class ApiWeb extends Api {
             return new Promise((resolve, reject) => {
                 const {id, params, body} = data;
                 const completeEndpoint = (params && params.length) ?
-                    super._getEndpointWithRouteParams(endpoint, params) :
-                    super._getEndpointWithRouteId(endpoint, id);
+                    Api.getEndpointWithRouteParams(endpoint, params) :
+                    Api.getEndpointWithRouteId(endpoint, id);
 
                 if (options.method === 'GET') {
                     this.apiInstance.get(completeEndpoint, {responseType: 'arraybuffer'})
