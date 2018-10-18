@@ -59,6 +59,7 @@ const _generateWebBundleConfig = (config) => {
     );
     config = dotProp.set(config, 'entry', Object.assign({}, config.entry, {
             Api: `./src/${makeRequestWeb}/ApiWeb.js`,
+            FirebaseApi: `./src/${makeRequestWeb}/FirebaseWebApi.js`,
             //components
             AppSpinner: `./src/${makeRequestWeb}/components/spinner.js`,
             PrivateRoute: `./src/${makeRequestWeb}/components/privateRoute.js`,

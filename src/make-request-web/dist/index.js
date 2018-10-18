@@ -1,4 +1,5 @@
 import Api from './Api';
+import FirebaseApi from './FirebaseApi';
 import * as constants from './constants';
 import * as selectors from './selectors';
 import * as actions from './actions';
@@ -20,6 +21,7 @@ import withCustomRequestSpinner from './withCustomRequestSpinner';
 
 export {
     Api,
+    FirebaseApi,
     actions,
     AppSpinner,
     constants,

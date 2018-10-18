@@ -1,3 +1,7 @@
+#1.10.0
+
+* Se integra la librería de Firebase como nueva API (solo storage):
+
 #1.9.0
 
 * Se agrega ***silent*** como opción en el make-request. No registra en el reducer el inicio y final de la llamada.  
