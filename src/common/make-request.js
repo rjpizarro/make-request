@@ -79,8 +79,6 @@ export default function makeRequest(
                 //simulate request
                 const delay = Math.random() * (3000 - 250) + 250;
 
-                dispatch(startRequest(options.startRequestActionType, options.silent, options.customRequestType));
-
                 setTimeout(() => {
                     dispatch(endRequest(options.endRequestActionType, options.silent, options.customRequestType));
                     let payload = options.mockResponse;
